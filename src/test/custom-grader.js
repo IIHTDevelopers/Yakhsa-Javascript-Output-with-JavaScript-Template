@@ -73,7 +73,7 @@ function writeOutputFiles(result, fileType) {
         xml: "./yaksha-test-cases.xml"
     };
 
-    let resultStatus = result.status === 'Pass' ? 'PASS' : 'FAIL';
+    let resultStatus = result.status === 'Passed' ? 'PASS' : 'FAIL';
     let output = `${result.methodName}=${resultStatus}\n`;
 
     let outputFilePath = outputFiles[fileType];
@@ -84,7 +84,7 @@ function writeOutputFiles(result, fileType) {
 
 // Function to check if console.log is used
 function checkConsoleLogOutput(ast) {
-    let result = 'Pass';
+    let result = 'Passed';
     let feedback = [];
     let consoleLogUsed = false;
 
@@ -99,7 +99,7 @@ function checkConsoleLogOutput(ast) {
     });
 
     if (!consoleLogUsed) {
-        result = 'Fail';
+        result = 'Failed';
         feedback.push("You must use console.log to output a message.");
     }
 
@@ -110,7 +110,7 @@ function checkConsoleLogOutput(ast) {
         'ConsoleLogOutput',
         'functional',
         1,
-        result === 'Pass' ? 1 : 0,
+        result === 'Passed' ? 1 : 0,
         result,
         true,
         feedback.join(', ')
@@ -119,7 +119,7 @@ function checkConsoleLogOutput(ast) {
 
 // Function to check if string concatenation or template literals are used
 function checkStringConcatenation(ast) {
-    let result = 'Pass';
+    let result = 'Passed';
     let feedback = [];
     let concatenationUsed = false;
     let templateLiteralUsed = false;
@@ -138,7 +138,7 @@ function checkStringConcatenation(ast) {
 
     // Feedback and result generation
     if (!concatenationUsed && !templateLiteralUsed) {
-        result = 'Fail';
+        result = 'Failed';
         feedback.push("You must use either string concatenation or template literals for output.");
     }
 
@@ -149,7 +149,7 @@ function checkStringConcatenation(ast) {
         'StringConcatenation',
         'functional',
         1,
-        result === 'Pass' ? 1 : 0,
+        result === 'Passed' ? 1 : 0,
         result,
         true,
         feedback.join(', ')
@@ -194,7 +194,7 @@ function gradeAssignment() {
         console.log(resultsToSend);
 
         // Log the test result in yellow for pass and red for fail using ANSI codes
-        if (testCaseResult.status === 'Pass') {
+        if (testCaseResult.status === 'Passed') {
             console.log(`\x1b[33m${testCaseResult.methodName}: Pass\x1b[0m`); // Yellow for pass
         } else {
             console.log(`\x1b[31m${testCaseResult.methodName}: Fail\x1b[0m`); // Red for fail
